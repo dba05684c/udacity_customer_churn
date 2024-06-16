@@ -25,6 +25,7 @@ udacity_customer_churn/
 │
 ├── logs/
 │   │   churn_results.log
+│   │   unit_test_churn_library.log
 │
 ├── models/
 │   │   (Generated pkl files to storel/load ML models)
