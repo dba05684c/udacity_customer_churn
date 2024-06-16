@@ -24,7 +24,7 @@ udacity_customer_churn/
 │   │   bank_data.csv
 │
 ├── logs/
-│   │   churn_script.log
+│   │   churn_results.log
 │
 ├── models/
 │   │   (Generated pkl files to storel/load ML models)

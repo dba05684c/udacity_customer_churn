@@ -1,11 +1,26 @@
-# library doc string
+'''
+File containing all functions used by the "Determine customers churn" project
 
+Purpose:
+    This file contains libraries and functions which can be used by other python scripts.
+
+Author:  Jan Jacobs
+
+Date: 20240613
+
+'''
 
 # import libraries
 import os
+import pandas as pd
+
 os.environ['QT_QPA_PLATFORM']='offscreen'
 
-
+logging.basicConfig(
+    filename='./logs/churn_results.log',
+    level=logging.INFO,
+    filemode='w',
+    format='%(name)s - %(levelname)s - %(message)s')
 
 def import_data(pth):
     '''
@@ -15,8 +30,12 @@ def import_data(pth):
             pth: a path to the csv
     output:
             df: pandas dataframe
-    '''	
-    pass
+    '''
+    try:
+        df = pd.read_csv(pth)
+        logging.info("INFO: File successfully read into variable")
+    except FileNotFoundError:
+        logging.error("EROR: The specified file could not be found!")
 
 
 def perform_eda(df):
