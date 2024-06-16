@@ -6,7 +6,7 @@ Author:  Jan Jacobs
 Date: 20240613
 '''
 
-#Import libaries
+# Import libaries
 import os
 import logging
 from math import ceil
@@ -18,6 +18,7 @@ logging.basicConfig(
     level=logging.INFO,
     filemode='w',
     format='%(asctime)s - %(name)s - %(levelname)s: %(message)s')
+
 
 def test_import():
     '''
@@ -35,9 +36,13 @@ def test_import():
     try:
         assert dataframe.shape[0] > 0
         assert dataframe.shape[1] > 0
-        logging.info('INFO: Rows: %d\tColumns: %d', dataframe.shape[0], dataframe.shape[1])
+        logging.info(
+            'INFO: Rows: %d\tColumns: %d',
+            dataframe.shape[0],
+            dataframe.shape[1])
     except AssertionError as err:
-        logging.error("ERROR: Testing import_data: The file doesn't appear to have rows and columns")
+        logging.error(
+            "ERROR: Testing import_data: The file doesn't appear to have rows and columns")
         raise err
 
 
@@ -63,24 +68,33 @@ def test_eda():
 
     # Assert if `customer_age_distribution.png` is created
     try:
-        assert os.path.isfile("./images/eda/customer_age_distribution.png") is True
-        logging.info('INFO: File %s was found', 'customer_age_distribution.png')
+        assert os.path.isfile(
+            "./images/eda/customer_age_distribution.png") is True
+        logging.info(
+            'INFO: File %s was found',
+            'customer_age_distribution.png')
     except AssertionError as err:
         logging.error('ERROR: Not such file on disk')
         raise err
 
     # Assert if `marital_status_distribution.png` is created
     try:
-        assert os.path.isfile("./images/eda/marital_status_distribution.png") is True
-        logging.info('INFO: File %s was found', 'marital_status_distribution.png')
+        assert os.path.isfile(
+            "./images/eda/marital_status_distribution.png") is True
+        logging.info(
+            'INFO: File %s was found',
+            'marital_status_distribution.png')
     except AssertionError as err:
         logging.error('ERROR: Not such file on disk')
         raise err
 
     # Assert if `total_transaction_distribution.png` is created
     try:
-        assert os.path.isfile("./images/eda/total_transaction_distribution.png") is True
-        logging.info('INFO: File %s was found', 'total_transaction_distribution.png')
+        assert os.path.isfile(
+            "./images/eda/total_transaction_distribution.png") is True
+        logging.info(
+            'INFO: File %s was found',
+            'total_transaction_distribution.png')
     except AssertionError as err:
         logging.error('ERROR: Not such file on disk')
         raise err
@@ -103,7 +117,7 @@ def test_encoder_helper():
 
     # Create `Churn` feature
     dataframe['Churn'] = dataframe['Attrition_Flag'].\
-                                apply(lambda val: 0 if val=="Existing Customer" else 1)
+        apply(lambda val: 0 if val == "Existing Customer" else 1)
 
     # Categorical Features
     cat_columns = ['Gender', 'Education_Level', 'Marital_Status',
@@ -111,22 +125,24 @@ def test_encoder_helper():
 
     try:
         encoded_df = clib.encoder_helper(
-                            dataframe=dataframe,
-                            category_lst=[],
-                            response=None)
+            dataframe=dataframe,
+            category_lst=[],
+            response=None)
 
         # Data should be the same
         assert encoded_df.equals(dataframe) is True
-        logging.info("INFO: Testing encoder_helper(data_frame, category_lst=[]): SUCCESS")
+        logging.info(
+            "INFO: Testing encoder_helper(data_frame, category_lst=[]): SUCCESS")
     except AssertionError as err:
-        logging.error("ERROR: Testing encoder_helper(data_frame, category_lst=[])")
+        logging.error(
+            "ERROR: Testing encoder_helper(data_frame, category_lst=[])")
         raise err
 
     try:
         encoded_df = clib.encoder_helper(
-                            dataframe=dataframe,
-                            category_lst=cat_columns,
-                            response=None)
+            dataframe=dataframe,
+            category_lst=cat_columns,
+            response=None)
 
         # Column names should be same
         assert encoded_df.columns.equals(dataframe.columns) is True
@@ -134,17 +150,19 @@ def test_encoder_helper():
         # Data should be different
         assert encoded_df.equals(dataframe) is False
         logging.info(
-            "INFO: Testing encoder_helper(data_frame, category_lst=cat_columns, response=None): SUCCESS")
+            "INFO: Testing encoder_helper(data_frame, category_lst=cat_columns, "
+            "response=None): SUCCESS")
     except AssertionError as err:
         logging.error(
-            "ERROR: Testing encoder_helper(data_frame, category_lst=cat_columns, response=None)")
+            "ERROR: Testing encoder_helper(data_frame, category_lst=cat_columns, "
+            "response=None)")
         raise err
 
     try:
         encoded_df = clib.encoder_helper(
-                            dataframe=dataframe,
-                            category_lst=cat_columns,
-                            response='Churn')
+            dataframe=dataframe,
+            category_lst=cat_columns,
+            response='Churn')
 
         # Columns names should be different
         assert encoded_df.columns.equals(dataframe.columns) is False
@@ -152,13 +170,18 @@ def test_encoder_helper():
         # Data should be different
         assert encoded_df.equals(dataframe) is False
 
-        # Number of columns in encoded_df is the sum of columns in data_frame and the newly created columns from cat_columns
-        assert len(encoded_df.columns) == len(dataframe.columns) + len(cat_columns)
+        # Number of columns in encoded_df is the sum of columns in data_frame
+        # and the newly created columns from cat_columns
+        assert len(
+            encoded_df.columns) == len(
+            dataframe.columns) + len(cat_columns)
         logging.info(
-        "INFO: Testing encoder_helper(data_frame, category_lst=cat_columns, response='Churn'): SUCCESS")
+            "INFO: Testing encoder_helper(data_frame, category_lst=cat_columns, "
+            "response='Churn'): SUCCESS")
     except AssertionError as err:
         logging.error(
-        "ERROR: Testing encoder_helper(data_frame, category_lst=cat_columns, response='Churn')")
+            "ERROR: Testing encoder_helper(data_frame, category_lst=cat_columns, "
+            "response='Churn')")
         raise err
 
 
@@ -169,25 +192,30 @@ def test_perform_feature_engineering():
     # Load the DataFrame
     dataframe = clib.import_data("./data/bank_data.csv")
 
-    #Churn feature
+    # Churn feature
     dataframe['Churn'] = dataframe['Attrition_Flag'].\
-        apply(lambda val: 0 if val=="Existing Customer" else 1)
+        apply(lambda val: 0 if val == "Existing Customer" else 1)
 
     try:
-        (_, X_test, _, _) = clib.perform_feature_engineering(
-                                                    dataframe=dataframe,
-                                                    response='Churn')
+        (_, x_test, _, _) = clib.perform_feature_engineering(
+            dataframe=dataframe,
+            response='Churn')
 
         # `Churn` must be present in `data_frame`
         assert 'Churn' in dataframe.columns
-        logging.info("INFO: Testing perform_feature_engineering. `Churn` column is present: SUCCESS")
+        logging.info(
+            "INFO: Testing perform_feature_engineering. `Churn` column is present: SUCCESS")
     except KeyError as err:
-        logging.error('ERROR: The `Churn` column is not present in the DataFrame')
+        logging.error(
+            'ERROR: The `Churn` column is not present in the DataFrame')
         raise err
 
     try:
-        # X_test size should be 30% of `data_frame`
-        assert (X_test.shape[0] == ceil(dataframe.shape[0]*0.3)) is True   # pylint: disable=E1101
+        # x_test size should be 30% of `data_frame`
+        assert (
+            x_test.shape[0] == ceil(
+                dataframe.shape[0] *
+                0.3)) is True   # pylint: disable=E1101
         logging.info(
             'INFO: Testing perform_feature_engineering. DataFrame sizes are consistent: SUCCESS')
     except AssertionError as err:
@@ -205,16 +233,16 @@ def test_train_models():
 
     # Churn feature
     dataframe['Churn'] = dataframe['Attrition_Flag'].\
-        apply(lambda val: 0 if val=="Existing Customer" else 1)
+        apply(lambda val: 0 if val == "Existing Customer" else 1)
 
     # Feature engineering
-    (X_train, X_test, y_train, y_test) = clib.perform_feature_engineering(
-                                                    dataframe=dataframe,
-                                                    response='Churn')
+    (x_train, x_test, y_train, y_test) = clib.perform_feature_engineering(
+        dataframe=dataframe,
+        response='Churn')
 
     # Assert if `logistic_model.pkl` file is present
     try:
-        clib.train_models(X_train, X_test, y_train, y_test)
+        clib.train_models(x_train, x_test, y_train, y_test)
         assert os.path.isfile("./models/logistic_model.pkl") is True
         logging.info('INFO: File %s was found', 'logistic_model.pkl')
     except AssertionError as err:
@@ -255,7 +283,8 @@ def test_train_models():
 
     # Assert if `feature_importances.png` file is present
     try:
-        assert os.path.isfile('./images/results/feature_importances.png') is True
+        assert os.path.isfile(
+            './images/results/feature_importances.png') is True
         logging.info('INFO: File %s was found', 'feature_importances.png')
     except AssertionError as err:
         logging.error('ERROR: Not such file on disk')

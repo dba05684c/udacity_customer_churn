@@ -10,6 +10,14 @@ The pyhton code must be written in a modular way.
 Included is also a file/script which can be used to execute unit testing of the python code.
 One component of the project is to demonstrate the ability to write proper/good documentation (amongst which is this file).
 
+### How to clone the project
+
+to clone this project, make sure you have git installed in your computer. If you have already installed git, run this command
+
+```
+git clone https://github.com/dba05684c/udacity_customer_churn.git
+```
+
 ## Running Files
 This is the list of scripts included:
 ```
@@ -37,6 +45,26 @@ udacity_customer_churn/
 │
 └── .gitignore
 ```
+
+### Modeling
+
+To run the workflow, simply run the `churn_library.py` in your terminal using command bellow:
+
+```
+python3 churn_library.py
+```
+
+### Testing and Logging
+
+In other conditions, suppose you want to change the configuration of the modeling workflow, such as: changing the path of the data location, adding other models, adding feature engineering stages. You can change it in the `churn_library.py` file. To test if your changes are going well, you need to do testing and logging.
+
+To do testing and logging, you need to change a number of configurations in the `churn_script_logging_and_tests.py` file, such as: target column name, categorical column name list, data location, etc. After that, run the following command in the terminal to perform testing and loggingAfter that, run the following command in the terminal to perform testing and logging:
+
+```
+python3 churn_script_logging_and_tests.py
+```
+
+### Cleaning up the code
 
 Install the pylint and autopep8 tools:
 pip install pylint
